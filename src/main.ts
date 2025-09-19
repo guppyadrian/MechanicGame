@@ -6,9 +6,37 @@ import { World } from "./world";
 Drawer.initialize(document.getElementById('gameCanvas') as HTMLCanvasElement);
 
 // then create our world
-World.createWorld(5, 5);
-World.add(2, 1, 'wall');
-World.add(2, 2, 'box');
+World.createWorld(10, 10);
+
+World.add(6, 7, 'box');
+
+World.add(1, 9, 'box');
+
+World.add(5, 7, 'wall');
+World.add(5, 5, 'wall');
+World.add(6, 5, 'wall');
+World.add(6, 9, 'hole');
+
+World.add(6, 4, 'hole');
+
+World.add(7, 0, 'wall');
+World.add(7, 2, 'box');
+World.add(7, 3, 'box');
+World.add(7, 4, 'hole');
+World.add(7, 5, 'wall');
+World.add(7, 6, 'wall');
+World.add(7, 7, 'wall');
+
+World.add(8, 0, 'wall');
+World.add(8, 1, 'wall');
+World.add(8, 2, 'wall');
+World.add(8, 3, 'wall');
+World.add(8, 4, 'hole');
+World.add(8, 5, 'wall');
+World.add(8, 6, 'wall');
+World.add(8, 7, 'wall');
+World.add(8, 8, 'wall');
+World.add(8, 9, 'wall');
 
 // ok lets add our player (and keep a reference)
 let player = World.add(0, 0, 'player');
