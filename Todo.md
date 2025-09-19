@@ -1,0 +1,5 @@
+- only be able to push 1 block at a time
+- add a start point w/ respawn mechanic
+- add ground layer
+- implement a strong push mechanic
+- implement some wall to box mechanic
