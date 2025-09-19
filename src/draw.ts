@@ -17,7 +17,7 @@ function drawWorld() {
           Drawer.ctx.fillStyle = 'darkRed';
           break;
         case 'block':
-          Drawer.ctx.fillStyle = 'black'; 
+          Drawer.ctx.fillStyle = '#101010'; 
           break;
         case 'box':
           Drawer.ctx.fillStyle = 'darkBlue';
