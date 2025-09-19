@@ -27,6 +27,31 @@ function drawWorld() {
       Drawer.ctx.fillRect(x * BlockSize, y * BlockSize, BlockSize, BlockSize);
     }
   }
+
+  for (let x = 0; x < World.width; x++) {
+    for (let y = 0; y < World.height; y++) {
+      const block = World.groundLayer[x][y];
+      if (block === undefined) { // TODO: make a drawBlock(x, y, blockType) function
+        Drawer.ctx.strokeRect(x * BlockSize, y * BlockSize + Drawer.canvas.height / 2, BlockSize, BlockSize);
+        continue;
+      }
+
+      switch (block.type) {
+        case 'player':
+          Drawer.ctx.fillStyle = 'red';
+          break;
+        case 'block':
+          Drawer.ctx.fillStyle = 'black'; 
+          break;
+        case 'box':
+          Drawer.ctx.fillStyle = 'blue';
+          break;
+      }
+      // if block here
+      
+      Drawer.ctx.fillRect(x * BlockSize, y * BlockSize + Drawer.canvas.height / 2, BlockSize, BlockSize);
+    }
+  }
 }
 
 /**

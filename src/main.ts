@@ -9,6 +9,9 @@ Drawer.initialize(document.getElementById('gameCanvas') as HTMLCanvasElement);
 World.createWorld(5, 5);
 World.add(2, 1, 'wall');
 World.add(2, 2, 'box');
+World.remove(2, 3, 0);
+World.remove(3, 3, 0);
+World.remove(4, 3, 0);
 
 // ok lets add our player (and keep a reference)
 let player = World.add(0, 0, 'player');

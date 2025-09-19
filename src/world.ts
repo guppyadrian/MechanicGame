@@ -6,6 +6,7 @@ import { Drawer } from "./libs/drawer";
 
 export class World {
     static playerLayer: (Block | undefined)[][];
+    static groundLayer: (Block | undefined)[][];
 
     static get width() {
         return this.playerLayer.length;
@@ -22,12 +23,18 @@ export class World {
      */
     static createWorld(width: number, height: number) {
         this.playerLayer = new Array(width);
+        this.groundLayer = new Array(width);
         for (let i = 0; i < width; i++) {
             this.playerLayer[i] = new Array(height);
+            this.groundLayer[i] = new Array(height);
+
+            for (let o = 0; o < height; o++) {
+                this.groundLayer[i][o] = new Block(i, o);
+            }
         } 
 
         Drawer.canvas.width = width * BlockSize;
-        Drawer.canvas.height = height * BlockSize;
+        Drawer.canvas.height = height * BlockSize * 2;
     }
 
     /**
@@ -35,20 +42,35 @@ export class World {
      * It will overwrite the desination position.
      * @param x x pos of block to move
      * @param y y pos of block to move
+     * @param z
      * @param destX destination x pos
      * @param destY destination y pos
-     * @returns {void}
+     * @param destZ
+     * @returns
      */
-    static moveBlock(x: number, y: number, destX: number, destY: number) {
-        const sourceBlock = this.playerLayer[x][y];
+    static moveBlock(x: number, y: number, z: number, destX: number, destY: number, destZ: number) {
+        const sourceBlock = this.getBlock(x, y, z);
   
         if (sourceBlock === undefined) return;
 
         sourceBlock.x = destX;
         sourceBlock.y = destY;
+        sourceBlock.z = destZ;
 
-        World.playerLayer[destX][destY] = sourceBlock;
-        World.playerLayer[x][y] = undefined;
+        if (destZ === 1) {
+            World.playerLayer[destX][destY] = sourceBlock;
+        } else {
+            World.groundLayer[destX][destY] = sourceBlock;
+        }
+        if (z === 1) {
+            World.playerLayer[x][y] = undefined;
+        } else {
+            World.groundLayer[x][y] = undefined;
+        }
+    }
+
+    static getBlock(x: number, y: number, z: number) {
+        return (z === 1) ? this.playerLayer[x][y] : this.groundLayer[x][y];
     }
 
     /**
@@ -56,9 +78,10 @@ export class World {
      * @param x x grid position
      * @param y y grid position
      * @param type type of block
+     * @param z z layer of block
      * @returns the block that was created
      */
-    static add(x: number, y: number, type: string) {
+    static add(x: number, y: number, type: string, z: number = 1) {
         let blockClass: typeof Block;
 
         switch (type) {
@@ -77,7 +100,19 @@ export class World {
         }
 
         const block = new blockClass(x, y);
-        this.playerLayer[x][y] = block;
+        if (z === 1) {
+            this.playerLayer[x][y] = block;
+        } else {
+            this.groundLayer[x][y] = block;
+        }
         return block;
+    }
+
+    static remove(x: number, y: number, z: number) {
+        if (z === 1) {
+            this.playerLayer[x][y] = undefined;
+        } else {
+            this.groundLayer[x][y] = undefined;
+        }
     }
 }

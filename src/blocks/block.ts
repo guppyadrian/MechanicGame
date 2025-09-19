@@ -5,6 +5,7 @@ export class Block {
     type: string;
     x: number;
     y: number;
+    z: number;
 
     isPushable: boolean = false;
     isCollidable: boolean = true;
@@ -17,10 +18,11 @@ export class Block {
         return this.y * BlockSize;
     }
 
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, z: number = 1) {
         this.type = 'block';
         this.x = x;
         this.y = y;
+        this.z = z;
     }
 
     move(x: number, y: number) {
@@ -34,12 +36,11 @@ export class Block {
             return;
 
         // Check world for collision
-        const targetBlock = World.playerLayer[targetX][targetY];
-
-
+        const targetBlock = World.getBlock(targetX, targetY, this.z);
 
         if (targetBlock === undefined || !targetBlock.isCollidable) { // if target block is empty
-            World.moveBlock(this.x, this.y, targetX, targetY);
+            World.moveBlock(this.x, this.y, this.z, targetX, targetY, this.z);
+            this.checkFalling();
             return true;
         }
 
@@ -48,8 +49,21 @@ export class Block {
         }
 
         if (targetBlock.move(x, y)) {
-            World.moveBlock(this.x, this.y, targetX, targetY);
+            World.moveBlock(this.x, this.y, this.z, targetX, targetY, this.z);
+            this.checkFalling();
             return true;
+        }
+    }
+
+    checkFalling() {
+        if (this.z === 0) return false;
+
+        if (World.getBlock(this.x, this.y, this.z - 1) === undefined) {
+            World.moveBlock(this.x, this.y, this.z, this.x, this.y, this.z - 1);
+
+            // for recursive checks
+            // TODO: uncomment this for >2 layers
+            //this.checkFalling();
         }
     }
 }
