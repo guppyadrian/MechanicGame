@@ -1,5 +1,6 @@
 import { Block } from "./blocks/block";
 import { Box } from "./blocks/box";
+import { Hole } from "./blocks/hole";
 import { Player } from "./blocks/player";
 import { BlockSize } from "./constants";
 import { Drawer } from "./libs/drawer";
@@ -71,6 +72,9 @@ export class World {
             case 'box':
                 blockClass = Box;
                 break;
+            case 'hole':
+                blockClass = Hole;
+                break;
             default:
                 blockClass = Block;
                 break;
@@ -79,5 +83,10 @@ export class World {
         const block = new blockClass(x, y);
         this.playerLayer[x][y] = block;
         return block;
+    }
+
+    static remove(x: number, y: number)
+    {
+        this.playerLayer[x][y] = undefined;
     }
 }

@@ -21,6 +21,9 @@ function drawWorld() {
         case 'box':
           Drawer.ctx.fillStyle = 'blue';
           break;
+        case 'hole':
+          Drawer.ctx.fillStyle = 'grey';
+          break;
       }
       // if block here
       
