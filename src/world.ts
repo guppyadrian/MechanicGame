@@ -34,7 +34,7 @@ export class World {
         } 
 
         Drawer.canvas.width = width * BlockSize;
-        Drawer.canvas.height = height * BlockSize * 2;
+        Drawer.canvas.height = height * BlockSize;
     }
 
     /**
