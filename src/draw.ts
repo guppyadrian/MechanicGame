@@ -20,7 +20,7 @@ function drawWorld() {
           Drawer.ctx.fillStyle = '#101010'; 
           break;
         case 'box':
-          Drawer.ctx.fillStyle = 'darkBlue';
+          Drawer.ctx.fillStyle = 'saddleBrown';
           break;
       }
       // if block here
@@ -46,7 +46,7 @@ function drawWorld() {
           Drawer.ctx.fillStyle = 'dimGray';
           break;
         case 'box':
-          Drawer.ctx.fillStyle = 'blue';
+          Drawer.ctx.fillStyle = 'Peru';
           break;
       }
       // if block here
