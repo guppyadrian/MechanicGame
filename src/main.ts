@@ -15,6 +15,11 @@ World.remove(4, 3, 0);
 
 // ok lets add our player (and keep a reference)
 let player = World.add(0, 0, 'player');
+const playerSpawnPos = {x: 0, y: 0};
+
+function respawnPlayer() {
+  
+}
 
 
 // rn tick looks a little empty... not much needs to happen every frame.
@@ -44,6 +49,9 @@ window.addEventListener('keydown', (e) => {
     case 'ArrowUp':
     case 'KeyW':
       player.move(0, -1);
+      break;
+    case 'KeyF':
+      respawnPlayer();
       break;
     default:
       break;
