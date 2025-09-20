@@ -1,3 +1,4 @@
+import type { Player } from "./blocks/player";
 import { DrawGame } from "./draw";
 import { Drawer } from "./libs/drawer";
 import { World } from "./world";
@@ -14,13 +15,13 @@ World.remove(3, 3, 0);
 World.remove(4, 3, 0);
 
 // ok lets add our player (and keep a reference)
-let player = World.add(0, 0, 'player');
+let player: Player;
 const playerSpawnPos = {x: 0, y: 0};
 
 function respawnPlayer() {
-  
+  player = World.add(playerSpawnPos.x, playerSpawnPos.y, 'player');
 }
-
+respawnPlayer(); 
 
 // rn tick looks a little empty... not much needs to happen every frame.
 function Tick() {
