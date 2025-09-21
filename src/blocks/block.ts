@@ -25,34 +25,40 @@ export class Block {
         this.z = z;
     }
 
-    move(x: number, y: number) {
-        const targetX = this.x + x;
-        const targetY = this.y + y;
-
+    checkTargetPos(targetX: number, targetY: number) {
         // Check boundaries
         if (targetX >= World.width || targetX < 0)
             return;
         if (targetY >= World.height || targetY < 0)
             return;
 
-        // Check world for collision
         const targetBlock = World.getBlock(targetX, targetY, this.z);
 
-        if (targetBlock === undefined || !targetBlock.isCollidable) { // if target block is empty
-            World.moveBlock(this.x, this.y, this.z, targetX, targetY, this.z);
-            this.checkFalling();
+        if (targetBlock === undefined || !targetBlock.isCollidable)
             return true;
-        }
 
         if (!targetBlock.isPushable) {
             return false;
         }
 
-        if (targetBlock.move(x, y)) {
+        return true;
+    }
+
+    move(x: number, y: number) {
+        const targetX = this.x + x;
+        const targetY = this.y + y;
+
+        
+
+        // Check world for collision
+        
+        if (this.checkTargetPos(targetX, targetY)) {
             World.moveBlock(this.x, this.y, this.z, targetX, targetY, this.z);
             this.checkFalling();
             return true;
         }
+
+        return false;
     }
 
     checkFalling() {
