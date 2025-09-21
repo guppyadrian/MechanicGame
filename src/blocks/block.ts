@@ -25,7 +25,11 @@ export class Block {
         this.z = z;
     }
 
-    checkTargetPos(targetX: number, targetY: number) {
+    checkTargetPos(x: number, y: number) {
+        const targetX = this.x + x;
+        const targetY = this.y + y;
+
+
         // Check boundaries
         if (targetX >= World.width || targetX < 0)
             return;
@@ -41,22 +45,24 @@ export class Block {
             return false;
         }
 
-        return true;
+        if (targetBlock.move(x, y)) {
+            return true;
+        }
+
+        return false;
     }
 
     move(x: number, y: number) {
         const targetX = this.x + x;
         const targetY = this.y + y;
-
         
-
-        // Check world for collision
-        
-        if (this.checkTargetPos(targetX, targetY)) {
+        if (this.checkTargetPos(x, y)) {
+            console.log(targetX)
             World.moveBlock(this.x, this.y, this.z, targetX, targetY, this.z);
             this.checkFalling();
             return true;
         }
+        
 
         return false;
     }
@@ -67,9 +73,11 @@ export class Block {
         if (World.getBlock(this.x, this.y, this.z - 1) === undefined) {
             World.moveBlock(this.x, this.y, this.z, this.x, this.y, this.z - 1);
 
+            return true;
             // for recursive checks
             // TODO: uncomment this for >2 layers
             //this.checkFalling();
         }
+        return false;
     }
 }

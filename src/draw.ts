@@ -1,3 +1,4 @@
+import type { Log } from "./blocks/log";
 import { BlockSize } from "./constants";
 import { Drawer } from "./libs/drawer";
 import { World } from "./world";
@@ -17,14 +18,18 @@ function drawWorld() {
           Drawer.ctx.fillStyle = 'darkRed';
           break;
         case 'block':
-          Drawer.ctx.fillStyle = '#101010'; 
+          Drawer.ctx.fillStyle = '#101010';
           break;
+        case 'log':
+          Drawer.ctx.fillStyle = 'darkGreen';
+          break;
+        case 'weak-box':
         case 'box':
           Drawer.ctx.fillStyle = 'saddleBrown';
           break;
       }
       // if block here
-      
+
       Drawer.ctx.fillRect(x * BlockSize, y * BlockSize, BlockSize, BlockSize);
     }
   }
@@ -45,13 +50,27 @@ function drawWorld() {
         case 'block':
           Drawer.ctx.fillStyle = 'dimGray';
           break;
+        case 'log':
+          Drawer.ctx.fillStyle = 'green';
+          break;
+        case 'weak-box':
         case 'box':
           Drawer.ctx.fillStyle = 'Peru';
           break;
       }
       // if block here
-      
+
       Drawer.ctx.fillRect(x * BlockSize, y * BlockSize, BlockSize, BlockSize);
+
+      if (block.type === 'log' && !(block as Log).standing) {
+        Drawer.ctx.fillStyle = "white";
+        Drawer.ctx.font = "15px Arial";
+        if ((block as Log).vertical) {
+          Drawer.ctx.fillText("<>", x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2);
+        } else {
+          Drawer.ctx.fillText("^^", x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2);
+        }
+      }
     }
   }
 }

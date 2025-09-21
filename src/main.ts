@@ -6,17 +6,33 @@ import { World } from "./world";
 // First initialize drawing with our canvas
 Drawer.initialize(document.getElementById('gameCanvas') as HTMLCanvasElement);
 
-// then create our world
-World.createWorld(5, 5);
-World.add(2, 1, 'wall');
-World.add(2, 2, 'box');
-World.remove(2, 3, 0);
-World.remove(3, 3, 0);
-World.remove(4, 3, 0);
+
+
+/// CREATE WORLD
+
+World.createWorld(9, 4);
+World.add(2, 1, 'log', 1, {felled: "vertical"});
+World.add(3, 1, 'weak-box');
+World.add(3, 2, 'weak-box');
+
+World.add(4, 1, 'log', 1, {felled: "vertical"});
+World.add(5, 1, 'weak-box');
+World.add(5, 0, 'weak-box');
+World.add(5, 2, 'weak-box');
+
+for (let x = 6; x <= 7; x++) {
+  for (let y = 0; y <= 4; y++) {
+    World.remove(x, y, 0);
+  }
+}
+
+/// CREATE WORLD
+
+
 
 // ok lets add our player (and keep a reference)
 let player: Player;
-const playerSpawnPos = {x: 0, y: 0};
+const playerSpawnPos = {x: 1, y: 2};
 
 function respawnPlayer() {
   player = World.add(playerSpawnPos.x, playerSpawnPos.y, 'player');

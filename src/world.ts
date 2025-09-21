@@ -1,6 +1,8 @@
 import { Block } from "./blocks/block";
 import { Box } from "./blocks/box";
+import { Log } from "./blocks/log";
 import { Player } from "./blocks/player";
+import { WeakBox } from "./blocks/weakBox";
 import { BlockSize } from "./constants";
 import { Drawer } from "./libs/drawer";
 
@@ -69,6 +71,13 @@ export class World {
         }
     }
 
+    static inBounds(x: number, y: number, z: number) {
+        if (x < 0 || x >= World.width) return false;
+        if (y < 0 || y >= World.height) return false;
+        if (z < 0 || z >= 2) return false;
+        return true;
+    }
+
     static getBlock(x: number, y: number, z: number) {
         return (z === 1) ? this.playerLayer[x][y] : this.groundLayer[x][y];
     }
@@ -81,7 +90,7 @@ export class World {
      * @param z z layer of block
      * @returns the block that was created
      */
-    static add(x: number, y: number, type: string, z: number = 1) {
+    static add(x: number, y: number, type: string, z: number = 1, properties: any = {}) {
         let blockClass: typeof Block;
 
         switch (type) {
@@ -91,8 +100,14 @@ export class World {
             case 'player':
                 blockClass = Player;
                 break;
+            case 'weak-box':
+                blockClass = WeakBox;
+                break;
             case 'box':
                 blockClass = Box;
+                break;
+            case 'log':
+                blockClass = Log;
                 break;
             default:
                 blockClass = Block;
@@ -100,6 +115,17 @@ export class World {
         }
 
         const block = new blockClass(x, y);
+
+        if ('felled' in properties) {
+            if (properties.felled === "vertical") {
+                (block as Log).standing = false;
+                (block as Log).vertical = true;
+            } else {
+                (block as Log).standing = false;
+                (block as Log).vertical = false;
+            }
+        }
+
         if (z === 1) {
             this.playerLayer[x][y] = block;
         } else {

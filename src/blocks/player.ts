@@ -2,8 +2,8 @@ import { Block } from "./block";
 
 export class Player extends Block {
 
-  constructor() {
-    super(0, 0);
+  constructor(x: number, y: number) {
+    super(x, y);
     this.type = 'player';
   }
 }
