@@ -72,6 +72,7 @@ window.addEventListener('keydown', (e) => {
       break;
     case 'KeyL':
       promptLevel();
+      break;
     default:
       break;
   }
