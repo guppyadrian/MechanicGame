@@ -56,8 +56,8 @@ export class Log extends Box {
             let canRoll = true;
             while(canRoll) {
                 if (
-                    !World.inBounds(this.x, this.y, this.z) ||
-                    World.getBlock(this.x, this.y, this.z) ||
+                    !World.inBounds(this.x, this.y + y, this.z) ||
+                    World.getBlock(this.x, this.y + y, this.z) ||
                     this.z === 0
                 ) {
                     return true;

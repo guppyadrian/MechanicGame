@@ -65,10 +65,11 @@ function drawWorld() {
       if (block.type === 'log' && !(block as Log).standing) {
         Drawer.ctx.fillStyle = "white";
         Drawer.ctx.font = "15px Arial";
+        Drawer.ctx.textAlign = "center";
         if ((block as Log).vertical) {
-          Drawer.ctx.fillText("<>", x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2);
+          Drawer.ctx.fillText("↔", x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 + 2);
         } else {
-          Drawer.ctx.fillText("^^", x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2);
+          Drawer.ctx.fillText("↕", x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2 + 2);
         }
       }
     }

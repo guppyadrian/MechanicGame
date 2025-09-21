@@ -1,5 +1,6 @@
 import { DrawGame } from "../draw";
 import { Drawer } from "../libs/drawer";
+import { loadLevel } from "../loadLevel";
 import { World } from "../world";
 
 Drawer.initialize(document.getElementById('gameCanvas') as HTMLCanvasElement);
@@ -7,6 +8,30 @@ Drawer.initialize(document.getElementById('gameCanvas') as HTMLCanvasElement);
 // set up buttons
 
 let blockSelected = "wall";
+let playerStartPos = {x: 0, y: 0, z: 1};
+
+function setStartPos() {
+    const p = prompt("Enter pos (x y): ");
+    if (p === "" || p === null) return;
+
+    const pos = p.split(' ');
+
+    playerStartPos = {x: parseInt(pos[0]), y: parseInt(pos[1]), z: 1};
+}
+
+function setSize() {
+    const p = prompt("Enter dimensions (x y): ");
+    if (p === "" || p === null) return;
+
+    const size = p.split(' ');
+
+    const lvl = exportLevel();
+
+    lvl.dimensions.x = parseInt(size[0]);
+    lvl.dimensions.y = parseInt(size[1]);
+
+    loadLevel(lvl);
+}
 
 function addBlock(type: string) {
     const btn = document.getElementById(type + "-btn");
@@ -14,12 +39,24 @@ function addBlock(type: string) {
         btn.onclick = () => { blockSelected = type };
 }
 
+function createButton(text: string, callback: () => any) {
+    const btn = document.createElement('button');
+
+    btn.textContent = text;
+
+    btn.addEventListener('click', callback);
+
+    document.getElementById('buttons')?.appendChild(btn);
+}
+
 addBlock('remove');
 addBlock('wall');
 addBlock('box');
 addBlock('log');
 
-
+createButton('export', exportLevel);
+createButton('playerPos', setStartPos);
+createButton('set size', setSize);
 
 World.createWorld(5, 5);
 
@@ -61,14 +98,27 @@ window.addEventListener('mousedown', (e) => {
     }
 });
 
-interface exportedLevel {
-    groundLayer: String[][],
-    playerLayer: String[][]
+interface Vector3 {
+    x: number,
+    y: number,
+    z: number
+}
+
+export interface ExportedLevel {
+    dimensions: Vector3
+    groundLayer: string[][],
+    playerLayer: string[][]
+    playerStartPos: Vector3
 }
 
 function exportLevel() {
-    let exported: exportedLevel;
-    exported = {groundLayer: [], playerLayer: []};
+    let exported: ExportedLevel;
+    exported = {
+        dimensions: {x: World.width, y: World.height, z: 2},
+        groundLayer: [],
+        playerLayer: [],
+        playerStartPos: playerStartPos
+    };
 
     for (let z = 0; z < 2; z++) {
         for (let x = 0; x < World.width; x++) {
@@ -78,4 +128,7 @@ function exportLevel() {
             }
         }
     }
+    console.log(JSON.stringify(exported));
+
+    return exported;
 }

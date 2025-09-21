@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LVLCREATOR</title>
+    <style>
+        html, body {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
 </head>
 <body>
     <canvas id="gameCanvas" width="300" height="300"></canvas>
-    <div>
+    <div id="buttons">
         <button id="remove-btn">Remove</button>
         <button id="box-btn">Box</button>
         <button id="wall-btn">Wall</button>
         <button id="log-btn">Log</button>
     </div>
-    <script type="module" src="./src/creator/main.ts"></script>
+    <script type="module" src="./src/creator/creator.ts"></script>
+    <br><a href="index.html">GAME</a>
 </body>
 </html>

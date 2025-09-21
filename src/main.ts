@@ -1,6 +1,7 @@
 import type { Player } from "./blocks/player";
 import { DrawGame } from "./draw";
 import { Drawer } from "./libs/drawer";
+import { promptLevel } from "./loadLevel";
 import { World } from "./world";
 
 // First initialize drawing with our canvas
@@ -32,10 +33,9 @@ for (let x = 6; x <= 7; x++) {
 
 // ok lets add our player (and keep a reference)
 let player: Player;
-const playerSpawnPos = {x: 1, y: 2};
 
 function respawnPlayer() {
-  player = World.add(playerSpawnPos.x, playerSpawnPos.y, 'player');
+  player = World.add(World.PlayerStartPos.x, World.PlayerStartPos.y, 'player');
 }
 respawnPlayer(); 
 
@@ -70,6 +70,8 @@ window.addEventListener('keydown', (e) => {
     case 'KeyF':
       respawnPlayer();
       break;
+    case 'KeyL':
+      promptLevel();
     default:
       break;
   }

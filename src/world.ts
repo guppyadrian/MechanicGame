@@ -9,6 +9,7 @@ import { Drawer } from "./libs/drawer";
 export class World {
     static playerLayer: (Block | undefined)[][];
     static groundLayer: (Block | undefined)[][];
+    static PlayerStartPos = {x: 0, y: 0, z: 0};
 
     static get width() {
         return this.playerLayer.length;
